@@ -60,12 +60,12 @@
   <hr>
   <!--  상단 nav바 시작-->
   <nav class="top_nav">
-    <a  th:href="@{/BusinessBoard/home}"  class="select">
+    <a  th:href="@{/BusinessBoard/home}" >
       <div>
         <p>홈</p>
       </div>
     </a>
-    <a th:href="@{/BusinessBoard/part}">
+    <a th:href="@{/BusinessBoard/part}" class="select">
       <div>
         <p>부분공사</p>
       </div>
@@ -119,6 +119,8 @@
     <br>
     <!-- 여기서부터 바디시작 -->
     <div >
+      <input id="summernote"
+             class="input_content"/>
       <input type="text"
              th:field="*{content}"
              class ="input_content"
@@ -193,6 +195,55 @@
 </body>
 
 <script layout:fragment="script" type='text/javascript'>
+// 썸머노트 시작
+$(document).ready(function() {
+      $('#summernote').summernote({
+        placeholder: '내용을 적어주세요',
+        tabsize: 2,
+        height: 400,
+        callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						uploadSummernoteImageFile(files[0],this);
+					},
+					onPaste: function (e) {
+						var clipboardData = e.originalEvent.clipboardData;
+						if (clipboardData && clipboardData.items && clipboardData.items.length) {
+							var item = clipboardData.items[0];
+							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+								e.preventDefault();
+							}
+						}
+					}
+				}
+      });
+    function autoSave() {
+        var content = $('#summernote').summernote('code');
+        console.log(content); // Summernote 작성내용 콘솔에 출력 (확인용)
+        $('.input_content').val(content);
+    }
+     $('#summernote').on('summernote.keyup', function() {
+        autoSave(); // 타이핑할 때마다 자동으로 저장
+    });
+});
+function uploadSummernoteImageFile(file, editor) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/uploadSummernoteImageFile",
+			contentType : false,
+			processData : false,
+			success : function(data) {
+            	//항상 업로드된 파일의 url이 있어야 한다.
+            	console.log("현제 들어온 데이터"+data.url)
+				$(editor).summernote('insertImage', data.url);
+			},
+			error: function(xhr, response, status, error) {
+            console.log("Error:", response);
+           }
+		});
+		}
 
 // 이미지 교체 용 스크립트 시작
 function ChangeImage(image, link) {

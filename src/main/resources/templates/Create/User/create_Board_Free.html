@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <!--    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">-->
     <!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">-->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
+
 
     <!-- sbb CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/create_board.css}">
@@ -298,8 +298,8 @@
         <img src="https://th.bing.com/th/id/OIP.t05PSmPFrOFlqy3FxlkrhQHaGU?pid=ImgDet&rs=1">
     </div>
 </div>
-</body>
 <!--업체별 자제패턴 팝업창 끝-->
+</body>
 <script layout:fragment="script" type='text/javascript'>
 // 썸머노트 시작
 $(document).ready(function() {
@@ -307,28 +307,21 @@ $(document).ready(function() {
         placeholder: '내용을 적어주세요',
         tabsize: 2,
         height: 400,
-        callbacks:{
-            onImageUpload : function(files){
-                uploadSummernoteImageFile(files[0],this);
-            }
-        }
+        callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						uploadSummernoteImageFile(files[0],this);
+					},
+					onPaste: function (e) {
+						var clipboardData = e.originalEvent.clipboardData;
+						if (clipboardData && clipboardData.items && clipboardData.items.length) {
+							var item = clipboardData.items[0];
+							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+								e.preventDefault();
+							}
+						}
+					}
+				}
       });
-         function uploadSummernoteImageFile(file,editor){
-            data = new FormData();
-            data.append("file",file);
-            $.ajax({
-                    data:data,
-                    type:"POST",
-                    url:"/uploadSummernoteImageFile",
-                    dataType:"JSON",
-                    contentType:false,
-                    processData:false,
-                    success:function(data){
-                         $(editor).summernote("insertImage",data.url);
-                         $("#thumbnailPath").append("<option value="+data.url+">"+data.originName+"</option>");
-                     }
-                 });
-                }
     function autoSave() {
         var content = $('#summernote').summernote('code');
         console.log(content); // Summernote 작성내용 콘솔에 출력 (확인용)
@@ -338,6 +331,25 @@ $(document).ready(function() {
         autoSave(); // 타이핑할 때마다 자동으로 저장
     });
 });
+function uploadSummernoteImageFile(file, editor) {
+		data = new FormData();
+		data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "/uploadSummernoteImageFile",
+			contentType : false,
+			processData : false,
+			success : function(data) {
+            	//항상 업로드된 파일의 url이 있어야 한다.
+            	console.log("현제 들어온 데이터"+data.url)
+				$(editor).summernote('insertImage', data.url);
+			},
+			error: function(xhr, response, status, error) {
+            console.log("Error:", response);
+           }
+		});
+		}
 // 채팅창 움직이기용 시작
 const draggableElementChat = document.querySelector('.draggable_chat');
 let isDraggingChat = false;
@@ -500,10 +512,6 @@ popupContinenceCloseButton.addEventListener('click',()=>{
 })
 // 인테리어 패턴 숨김처리 끝
 // 인테리어 패턴  종료혹은 숨김처리 끝
-
-
-
 </script>
-
 </html>
 
