@@ -32,12 +32,8 @@ public class ChatHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
         list.add(session);
-        for(WebSocketSession w : list) {
-            System.out.println("소켓 : " + w.getId());
-        }
-
         log.info(session + " 클라이언트 접속");
-        System.out.println("session : " + session.getLocalAddress());
+//        System.out.println("session : " + session.getLocalAddress());
 
     }
 
