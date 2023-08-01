@@ -76,25 +76,23 @@ public class UserBoardController {
     //    session은 모델과 달리 변수가 정적으로 페이지에 존재함으로 재사용이 가능
     @GetMapping("/free_Board")//자유게시판부터작업
     public String userBoardFreeBoard(Model model,
-                                     HttpSession session,
+                                     @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                      @RequestParam(value = "page", defaultValue = "0") int page,
                                      @RequestParam(value = "kw", defaultValue = "") String kw,
                                      @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
 
-        boolean sortAscending = true;
-        Boolean previousSortAscending = (Boolean) session.getAttribute("sortAscending");
 
-        if (previousSortAscending != null) {
-            sortAscending = !previousSortAscending; // 이전 정렬 방식을 토글합니다.
-        }
+        System.out.println("현제 정렬 조건 : " +sortData);
 
-        Page<Board> paging = this.boardService.getList(page, kw, 14, attribute, sortAscending);
+        if(sortData ==true)sortData=false;
+        else sortData=true;
+        Page<Board> paging = this.boardService.getList(page, kw, 14, attribute, sortData);
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("attribute", attribute);
-        model.addAttribute("sortAscending", sortAscending);
-        session.setAttribute("sortAscending", sortAscending); // 세션에 현재 정렬 방식을 저장합니다.
+        model.addAttribute("sortAscending", sortData);
+        model.addAttribute("sortData", sortData); // 세션에 현재 정렬 방식을 저장합니다.
 
         return "UserBoard/free";
     }
@@ -124,25 +122,22 @@ public class UserBoardController {
     //질문게시판 목록
     @GetMapping("/question")
     public String user_Board_Question(Model model,
-                                      HttpSession session,
+                                      @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                       @RequestParam(value = "page", defaultValue = "0") int page,
                                       @RequestParam(value = "kw", defaultValue = "") String kw,
                                       @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
-        boolean sortAscending = true;
-        Boolean previousSortAscending = (Boolean) session.getAttribute("sortAscending");
 
-        if (previousSortAscending != null) {
-            sortAscending = !previousSortAscending; // 이전 정렬 방식을 토글합니다.
-        }
+        if(sortData ==true)sortData=false;
+        else sortData=true;
 
-        Page<Board> paging = this.boardService.getList(page, kw, 12, attribute, sortAscending);
+        Page<Board> paging = this.boardService.getList(page, kw, 12, attribute, sortData);
 
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("attribute", attribute);
-        model.addAttribute("sortAscending", sortAscending);
-        session.setAttribute("sortAscending", sortAscending); // 세션에 현재 정렬 방식을 저장합니다.
+        model.addAttribute("sortAscending", sortData);
+        model.addAttribute("sortData", sortData); // 세션에 현재 정렬 방식을 저장합니당
         return "UserBoard/question";
     }
 
@@ -192,24 +187,20 @@ public class UserBoardController {
     //리뷰게시판 목록
     @GetMapping("/review")
     public String userBoardReview(Model model,
-                                  HttpSession session,
+                                  @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                   @RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "kw", defaultValue = "") String kw,
                                   @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
-        boolean sortAscending = true;
-        Boolean previousSortAscending = (Boolean) session.getAttribute("sortAscending");
+        if(sortData ==true)sortData=false;
+        else sortData=true;
 
-        if (previousSortAscending != null) {
-            sortAscending = !previousSortAscending; // 이전 정렬 방식을 토글합니다.
-        }
-
-        Page<Board> paging = this.boardService.getList(page, kw, 11, attribute, sortAscending);
+        Page<Board> paging = this.boardService.getList(page, kw, 11, attribute, sortData);
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("attribute", attribute);
-        model.addAttribute("sortAscending", sortAscending);
-        session.setAttribute("sortAscending", sortAscending); // 세션에 현재 정렬 방식을 저장합니다.
+        model.addAttribute("sortAscending", sortData);
+        model.addAttribute("sortData", sortData); // 세션에 현재 정렬 방식을 저장합니다.
         return "UserBoard/review";
     }
 
@@ -272,24 +263,21 @@ public class UserBoardController {
     //팁게시판 목록
     @GetMapping("/tip")
     public String user_Board_Tip(Model model,
-                                 HttpSession session,
+                                 @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  @RequestParam(value = "kw", defaultValue = "") String kw,
                                  @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
-        boolean sortAscending = true;
-        Boolean previousSortAscending = (Boolean) session.getAttribute("sortAscending");
 
-        if (previousSortAscending != null) {
-            sortAscending = !previousSortAscending; // 이전 정렬 방식을 토글합니다.
-        }
+        if(sortData ==true)sortData=false;
+        else sortData=true;
 
-        Page<Board> paging = this.boardService.getList(page, kw, 13, attribute, sortAscending);
+        Page<Board> paging = this.boardService.getList(page, kw, 13, attribute, sortData);
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("attribute", attribute);
-        model.addAttribute("sortAscending", sortAscending);
-        session.setAttribute("sortAscending", sortAscending); // 세션에 현재 정렬 방식을 저장합니다.
+        model.addAttribute("sortAscending", sortData);
+        model.addAttribute("sortData", sortData); // 세션에 현재 정렬 방식을 저장합니다.
         return "UserBoard/tip";
     }
 
