@@ -307,28 +307,8 @@ $(document).ready(function() {
         placeholder: '내용을 적어주세요',
         tabsize: 2,
         height: 400,
-        callbacks:{
-            onImageUpload : function(files){
-                uploadSummernoteImageFile(files[0],this);
-            }
         }
       });
-         function uploadSummernoteImageFile(file,editor){
-            data = new FormData();
-            data.append("file",file);
-            $.ajax({
-                    data:data,
-                    type:"POST",
-                    url:"/uploadSummernoteImageFile",
-                    dataType:"JSON",
-                    contentType:false,
-                    processData:false,
-                    success:function(data){
-                         $(editor).summernote("insertImage",data.url);
-                         $("#thumbnailPath").append("<option value="+data.url+">"+data.originName+"</option>");
-                     }
-                 });
-                }
     function autoSave() {
         var content = $('#summernote').summernote('code');
         console.log(content); // Summernote 작성내용 콘솔에 출력 (확인용)

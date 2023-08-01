@@ -130,10 +130,10 @@
             <!--유저보드 정렬 구현 시작-->
             <tr>
                 <th><a>번호</a></th>
-                <th><a th:href="@{/UserBoard/free_Board(attribute='title')}" >제목</a></th>
-                <th><a th:href="@{/UserBoard/free_Board(attribute='author.id')}" >글쓴이</a></th>
-                <th><a th:href="@{/UserBoard/free_Board(attribute='createDate')}" >등록일</a></th>
-                <th><a th:href="@{/UserBoard/free_Board(attribute='views')}" >조회수</a></th>
+                <th><a th:href="@{/UserBoard/free_Board(attribute='title', sortData= ${sortData})}" >제목</a></th>
+                <th><a th:href="@{/UserBoard/free_Board(attribute='author.id', sortData= ${sortData})})}" >글쓴이</a></th>
+                <th><a th:href="@{/UserBoard/free_Board(attribute='createDate', sortData= ${sortData})})}" >등록일</a></th>
+                <th><a th:href="@{/UserBoard/free_Board(attribute='views', sortData= ${sortData})})}" >조회수</a></th>
                 <th><a href="#">추천수</a></th>
             </tr>
             <!--유저보드 정렬 구현 끝-->
