@@ -19,6 +19,7 @@ public interface BoardRepository  extends JpaRepository<Board, Integer>,
         JpaSpecificationExecutor<Board>
 {
     //    Book findByAuthor(String author);
+
     Page<Board> findAll(Pageable pageable);
     Page<Board> findAll(Specification<Board> spec, Pageable pageable);
 //    Page<Board> findBy VoterAsc(Pageable pageable);
@@ -29,6 +30,7 @@ public interface BoardRepository  extends JpaRepository<Board, Integer>,
     Page<Board>findAllByOrderByVoterAsc(Pageable pageable);
     Page<Board>findAllByBoardMap(Specification<Board> spec, Pageable pageable,Integer boardMap);
     long countBoardVotersById(Integer boardId);
+    List<Board> findByBoardMap(Integer boardMap);//사업자 등록때문에 임시방편 
 
 //    @Query("select "
 //            + "distinct b "

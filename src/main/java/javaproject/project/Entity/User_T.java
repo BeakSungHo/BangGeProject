@@ -36,6 +36,9 @@ public class User_T {
 
     @Column(columnDefinition = "TEXT")
     private String businessman_site;
+// 사업자를 위해 추가된부분
+    @Column(columnDefinition = "TEXT")
+    private String businessman_address;
 
 
 

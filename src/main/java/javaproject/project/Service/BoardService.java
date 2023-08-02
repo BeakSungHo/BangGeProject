@@ -152,6 +152,9 @@ public class BoardService {
         board.getVoter().add(user);
         this.boardRepository.save(board);
     }
+    public List<Board> getBoardListByBoardMap(int boardMap){
+        return this.boardRepository.findByBoardMap(boardMap);
+    }
 
 
 }

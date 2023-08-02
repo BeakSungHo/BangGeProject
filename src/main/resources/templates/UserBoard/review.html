@@ -58,6 +58,12 @@
             </div>
             <div class="board_login" sec:authorize="isAuthenticated()">
                 <!--        sec:authorize="isAuthenticated()" 로그인 성공시 나오게 하는 코드       -->
+                <a class="login" th:if="${user.businessman_num == null}" th:href="@{/user/Business_General}">
+                    <div>
+                        <p>사업자전환 /</p>
+                    </div>
+                </a>
+
                 <a class="login" th:href="@{/user/logout}">
                     <div>
                         <p>로그아웃</p>

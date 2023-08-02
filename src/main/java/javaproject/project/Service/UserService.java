@@ -1,6 +1,7 @@
 package javaproject.project.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import javaproject.project.CreateForm.BusinessCreateForm;
 import javaproject.project.Entity.User_T;
 import javaproject.project.Repository.UserRepository;
 import javaproject.project.Utill.DataNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -33,6 +35,13 @@ public class UserService {
         user.setNickname(nickname);
         this.userRepository.save(user);
         return user;
+    }
+    public User_T createBusiness(BusinessCreateForm businessCreateForm, User_T user_t){
+        user_t.setBusinessman_num(businessCreateForm.getBusinessman_num());
+        user_t.setBusinessman_site(businessCreateForm.getBusinessman_site());
+        user_t.setBusinessman_address(businessCreateForm.getBusinessman_address());
+        this.userRepository.save(user_t);
+        return user_t;
     }
 
 //    중복확인 시작
@@ -81,6 +90,9 @@ public class UserService {
         }
     }
 //    유저정보꺼내기용도
+    public List<User_T> getUserList() {
+        return this.userRepository.findAll();
+    }
 
 
 }

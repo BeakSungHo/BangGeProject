@@ -14,6 +14,7 @@ import javaproject.project.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,8 +42,12 @@ public class UserBoardController {
     private final UserService userService;
 
     @GetMapping("/main")
-    public String userBoardMain() {
-
+    public String userBoardMain(Model model,Principal principal) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "UserBoard/Main";
     }
 
@@ -51,7 +56,15 @@ public class UserBoardController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create_Board_Free")
 //    주의; BoardCreateForm를 받는쪽에서 생성하지않으면 html에서 BoardCreateForm는 없는 객체 처리가됨 주의
-    public String showCreateBoardForm(BoardCreateForm boardCreateForm) {
+    public String showCreateBoardForm(
+            Model model,
+            Principal principal,
+            BoardCreateForm boardCreateForm) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
 //        System.out.println("접속은성공?");
         return "Create/User/Create_Board_free";
     }
@@ -64,6 +77,7 @@ public class UserBoardController {
         if (bindingResult.hasErrors()) {
             return "Create/user/create_Board_Free";
         }
+
         System.out.println("아이디 : " + principal.getName());
         User_T user = this.userService.getUser(principal.getName());
         this.boardService.create(
@@ -76,10 +90,16 @@ public class UserBoardController {
     //    session은 모델과 달리 변수가 정적으로 페이지에 존재함으로 재사용이 가능
     @GetMapping("/free_Board")//자유게시판부터작업
     public String userBoardFreeBoard(Model model,
+                                     Principal principal,
                                      @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                      @RequestParam(value = "page", defaultValue = "0") int page,
                                      @RequestParam(value = "kw", defaultValue = "") String kw,
                                      @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
 
 
         System.out.println("현제 정렬 조건 : " +sortData);
@@ -101,9 +121,15 @@ public class UserBoardController {
     @GetMapping("/free_Board_Detail/{id}")
     public String userBoardFreeBoardDetail(
             Model model,
+            Principal principal,
             CommentForm commentForm,
             @PathVariable("id") Integer id,
             @RequestParam(value = "page", defaultValue = "0") int page) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
 
         Board board = this.boardService.getBoard(id);
         Page<Comment> paging_Comment = this.commentService.getList(page, board);
@@ -122,11 +148,16 @@ public class UserBoardController {
     //질문게시판 목록
     @GetMapping("/question")
     public String user_Board_Question(Model model,
+                                      Principal principal,
                                       @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                       @RequestParam(value = "page", defaultValue = "0") int page,
                                       @RequestParam(value = "kw", defaultValue = "") String kw,
                                       @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
-
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         if(sortData ==true)sortData=false;
         else sortData=true;
 
@@ -144,9 +175,15 @@ public class UserBoardController {
     // 질문게시판 디테일
     @GetMapping("/question_Detail/{id}")
     public String userBoardQuestionDetail(Model model,
+                                          Principal principal,
                                           CommentForm commentForm,
                                           @PathVariable("id") Integer id,
                                           @RequestParam(value = "page", defaultValue = "0") int page) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         Board board = this.boardService.getBoard(id);
         Page<Comment> paging_Comment = this.commentService.getList(page, board);
 //        조회수 늘리기위한 함수추가
@@ -160,7 +197,12 @@ public class UserBoardController {
     //질문 게시판 게시물작성 기능
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create_board_question")
-    public String boardCreateFormQuestion(BoardCreateForm boardCreateForm) {
+    public String boardCreateFormQuestion(Model model, Principal principal , BoardCreateForm boardCreateForm) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "Create/User/Create_Board_Question";
     }
 
@@ -187,10 +229,16 @@ public class UserBoardController {
     //리뷰게시판 목록
     @GetMapping("/review")
     public String userBoardReview(Model model,
+                                  Principal principal,
                                   @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                   @RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "kw", defaultValue = "") String kw,
                                   @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         if(sortData ==true)sortData=false;
         else sortData=true;
 
@@ -207,9 +255,15 @@ public class UserBoardController {
     // 리뷰게시판 디테일
     @GetMapping("/review_Detail/{id}")
     public String userBoardReviewDetail(Model model,
+                                        Principal principal,
                                         CommentForm commentForm,
                                         @PathVariable("id") Integer id,
                                         @RequestParam(value = "page", defaultValue = "0") int page) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         Board board = this.boardService.getBoard(id);
         Page<Comment> paging_Comment = this.commentService.getList(page, board);
 //        조회수 늘리기위한 함수추가
@@ -224,7 +278,14 @@ public class UserBoardController {
     //리뷰게시판 게시물 작성기능
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create_board_review")
-    public String boardCreateFormReview(BoardCreateForm boardCreateForm) {
+    public String boardCreateFormReview(Model model,
+                                        Principal principal,
+                                        BoardCreateForm boardCreateForm) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "Create/User/Create_Board_Review";
     }
 
@@ -248,12 +309,25 @@ public class UserBoardController {
 
     //    ===성향태스트 시작====
     @GetMapping("/tendency")
-    public String userBoardTendency() {
+    public String userBoardTendency(Model model, Principal principal) {
+
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "UserBoard/tendency";
     }
 
     @GetMapping("/tendency_Detail")
-    public String userBoardTendencyDetail() {
+    public String userBoardTendencyDetail(Model model,
+                                          Principal principal) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
+
         return "UserBoard/tendency_detail";
     }
 //   ====성향테스트 끝====
@@ -263,11 +337,16 @@ public class UserBoardController {
     //팁게시판 목록
     @GetMapping("/tip")
     public String user_Board_Tip(Model model,
+                                 Principal principal,
                                  @RequestParam(value =  "sortData",defaultValue = "true")boolean sortData,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  @RequestParam(value = "kw", defaultValue = "") String kw,
                                  @RequestParam(value = "attribute", defaultValue = "createDate") String attribute) {
-
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         if(sortData ==true)sortData=false;
         else sortData=true;
 
@@ -285,8 +364,14 @@ public class UserBoardController {
     @GetMapping("/tip_Detail/{id}")
     public String user_Board_Tip_Detail(Model model,
                                         CommentForm commentForm,
+                                        Principal principal,
                                         @PathVariable("id") Integer id,
                                         @RequestParam(value = "page", defaultValue = "0") int page) {
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         Board board = this.boardService.getBoard(id);
         Page<Comment> paging_Comment = this.commentService.getList(page, board);
 //        조회수 늘리기위한 함수추가
@@ -300,7 +385,15 @@ public class UserBoardController {
     //팁게시판 게시물 작성기능
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create_board_tip")
-    public String boardCreateForm_Tip(BoardCreateForm boardCreateForm) {
+    public String boardCreateForm_Tip(Model model,
+                                      Principal principal,
+                                      BoardCreateForm boardCreateForm ) {
+
+        //사업자인지 사용자인지를 확인하기위한 작업
+        if (principal != null) {
+            User_T user = this.userService.getUser(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "Create/User/Create_Board_Tip";
     }
 

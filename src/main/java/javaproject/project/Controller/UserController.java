@@ -2,11 +2,14 @@ package javaproject.project.Controller;
 
 
 import jakarta.validation.Valid;
+import javaproject.project.CreateForm.BusinessCreateForm;
 import javaproject.project.CreateForm.Email.EmailPostDto;
 import javaproject.project.CreateForm.Email.LoginIdAndEmailPostDto;
 import javaproject.project.CreateForm.UserCreateForm;
+import javaproject.project.Entity.Board;
 import javaproject.project.Entity.User_T;
 import javaproject.project.Repository.UserRepository;
+import javaproject.project.Service.BoardService;
 import javaproject.project.Service.EmailService;
 import javaproject.project.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +37,7 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final User_T user_t;
-
+    private final BoardService boardService;
 
 
 
@@ -114,6 +118,26 @@ public class UserController {
             return ResponseEntity.ok("AVAILABLE");
         }
     }
+
+    //    사업자전환 메서드 시작
+    @GetMapping("/Business_General")
+    public  String  user_Initiation_General2(BusinessCreateForm businessCreateForm){
+        return "Login/business_conversion";
+    }
+    //    회원가입 Post맵핑
+    @PostMapping("/Business_General")
+    public String initiationGeneralPost2(@Valid BusinessCreateForm businessCreateForm, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "Login/business_conversion";
+        }
+        User_T user = this.userService.getUser(principal.getName());
+        userService.createBusiness(businessCreateForm,user);
+        boardService.create("사업자 업체명이 비어있습니다.","사업자 프로필이 현제 비어있습니다.",user,31);
+
+        return "redirect:/UserBoard/main";
+    }
+
+    //    사업자전환 메서드 끝
 }
 
 
