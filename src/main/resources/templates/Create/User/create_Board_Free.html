@@ -171,33 +171,7 @@
 </div>
 <!-- 가장아래를 표시하기위한 div  -->
 <div id="scrollbottom"></div>
-<!--우측 네비게이션용 시작-->
-<div class="popup_body">
-    <nav class="popup_nav">
 
-        <a href="#scrolltop" rel="nofollow">
-            <button class="nav_button nav_top">
-                TOP
-            </button>
-        </a>
-
-        <button class="nav_button" id="global_chat_open" ype="buttont">
-            전체 채팅
-        </button>
-
-        <button class="nav_button">유저<p>게시판</button>
-        <button class="nav_button">사업자<p>게시판</button>
-        <button class="nav_button">스토어</button>
-        <button class="nav_button">개인 채팅</button>
-        <a href="#scrollbottom" rel="nofollow">
-            <button class="nav_button nav_down">
-                DOWN
-            </button>
-        </a>
-
-    </nav>
-</div>
-<!--우측 네비게이션용 끝  -->
 <!--전체 챗화면 시작 스크립트 사용유의-->
 <div class="draggable_chat">
     <!--  상단바     -->
@@ -328,7 +302,7 @@ $(document).ready(function() {
         console.log(content); // Summernote 작성내용 콘솔에 출력 (확인용)
         $('.input_content').val(content);
     }
-     $('#summernote').on('summernote.keyup', function() {
+     $('#summernote').on('summernote.change', function() {
         autoSave(); // 타이핑할 때마다 자동으로 저장
     });
 });

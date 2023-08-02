@@ -9,10 +9,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String projectPath = System.getProperty("user.dir");
-        String path = "/src/main/resources/static/image/SummerNote";
+        String path = "/src/main/resources/static/image/SummerNote/";
 
         registry.addResourceHandler("/summernoteImage/**")
                 .addResourceLocations("file:///"+ projectPath +path);
+//                .addResourceLocations("file:///C:/summernote_image/");
 
 
     }

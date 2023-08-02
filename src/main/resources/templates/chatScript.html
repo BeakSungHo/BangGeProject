@@ -1,8 +1,7 @@
 
 <script th:fragment="chatScriptFragment" th:inline="javascript" xmlns:th="http://www.w3.org/1999/xhtml">
-    const chatStatus = document.querySelector('.draggable_chat');
-    const computedStyle = window.getComputedStyle(chatStatus);
-    const displayValue = computedStyle.display;
+    var chatStatus = document.querySelector('.draggable_chat');
+    var displayValue = window.getComputedStyle(chatStatus).getPropertyValue('display');
         //챗팅 스크립트 시작
          $(document).ready(function(){
               const currentHost = window.location.host;
@@ -15,8 +14,11 @@
                   send();
               });
               $("#msg").on("keypress", function(e) {
+              chatStatus = document.querySelector('.draggable_chat');
+              displayValue = window.getComputedStyle(chatStatus).getPropertyValue('display');
               console.log(user)
-            console.log("displayValue123 : ",displayValue)
+              console.log(chatStatus);
+            console.log("displayValue 정보 : ",displayValue)
             console.log("displayValue : ",displayValue === "block")
             console.log("user and displayValue : ",(!(user=="anonymousUser") && displayValue === "block"))
               console.log(!(user=="anonymousUser"))
