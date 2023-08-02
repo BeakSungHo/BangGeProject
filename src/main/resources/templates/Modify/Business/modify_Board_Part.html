@@ -134,7 +134,8 @@
         <div>
             <input id="summernote"
                    class="input_content"/>
-            <input type="text"
+            <input id="contentSave"
+                   type="text"
                    th:field="*{content}"
                    class="input_content"
                    placeholder="나중에 api로 대체될예정"/>
@@ -180,10 +181,12 @@
 <script layout:fragment="script" type='text/javascript'>
 // 썸머노트 시작
 $(document).ready(function() {
+
       $('#summernote').summernote({
         placeholder: '내용을 적어주세요',
         tabsize: 2,
         height: 400,
+
         callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 					onImageUpload : function(files) {
 						uploadSummernoteImageFile(files[0],this);
@@ -199,14 +202,25 @@ $(document).ready(function() {
 					}
 				}
       });
+
+
+    function contentF(){
+        var content = $('#contentSave').val();
+        $('#summernote').summernote('code', content);
+    }
+    contentF();
     function autoSave() {
         var content = $('#summernote').summernote('code');
-        console.log(content); // Summernote 작성내용 콘솔에 출력 (확인용)
-        $('.input_content').val(content);
+        $('#contentSave').val(content);
     }
-     $('#summernote').on('summernote.keyup', function() {
+
+     $('#summernote').on('summernote.change', function() {
         autoSave(); // 타이핑할 때마다 자동으로 저장
     });
+
+
+
+
 });
 function uploadSummernoteImageFile(file, editor) {
 		data = new FormData();
@@ -227,7 +241,7 @@ function uploadSummernoteImageFile(file, editor) {
            }
 		});
 		}
-
+// 썸머노트 끝
 // 채팅창 움직이기용 시작
 const draggableElementChat = document.querySelector('.draggable_chat');
 let isDraggingChat = false;

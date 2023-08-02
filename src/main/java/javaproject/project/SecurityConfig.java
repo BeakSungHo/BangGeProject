@@ -26,25 +26,9 @@ public class SecurityConfig   {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                //구글api추가사항 시작
-//                .requestMatchers("/security-login/info").authenticated()
-//                .requestMatchers("/security-login/admin/**").hasAuthority(UserRole.ADMIN.name()).anyRequest().permitAll()
-                //구글api추가사항 끝
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                 .and()
-                //구글api추가사항 시작
-//                .formLogin((formLogin)->formLogin
-//                        .usernameParameter("lo oauth2ginId")
-//                        .passwordParameter("password")
-//                        .loginPage("/security-login/login")
-//                        .defaultSuccessUrl("/security-login")
-//                        .failureUrl("/security-login/login"))
-////and
-//                .logout((logout)->logout
-//                        .logoutUrl("/security-login/logout")
-//                        .invalidateHttpSession(true)
-//                        .deleteCookies("JSESSIONID"))
-//and           //구글api추가사항 끝
+
                 .csrf((csrf)->csrf.disable())
 //and
                 .headers(headers->headers
