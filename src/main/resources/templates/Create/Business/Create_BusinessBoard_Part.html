@@ -195,6 +195,11 @@ $(document).ready(function() {
         console.log(content); // Summernote 작성내용 콘솔에 출력 (확인용)
         $('.input_content').val(content);
     }
+   function contentF(){
+        var content = $('#contentSave').val();
+        $('#summernote').summernote('code', content);
+    }
+    contentF();
      $('#summernote').on('summernote.change', function() {
         autoSave(); // 타이핑할 때마다 자동으로 저장
     });
