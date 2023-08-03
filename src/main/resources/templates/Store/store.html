@@ -73,37 +73,23 @@
     </div>
     <!--  머리부분 로그인 회원가입 등 끝-->
     <hr>
-    <!--  상단 nav바 시작-->
-
-    <!--  상단 nav바 끝 -->
-
     <!-- 스토어 작업 -->
     <div class="store_menu">
         <ul>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">1번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://store.ohou.se/')">2번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">3번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://store.ohou.se/')">4번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">5번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">6번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">7번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://store.ohou.se/')">8번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">9번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">10번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">11번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://store.ohou.se/')">12번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">13번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">14번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">15번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">16번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">17번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">18번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">19번 메뉴</button></li>
-            <li><button class="button_bar" type="button" onclick="changeIframeSrc('https://shopping.naver.com/home')">20번 메뉴</button></li>
+            <li th:each="board : ${boardList}">
+                <button class="button_bar"
+                        type="button"
+                        th:authorAddress="${board.author.businessman_site}"
+                        th:onclick="changeIframeSrc(this.getAttribute('authorAddress'))"
+                        th:text="${board.title}"
+                ></button>
+<!--                https://shopping.naver.com/home-->
+<!--               https://mall.hanssem.com/plan/16401.html?utm_source=google_sa_pc&utm_medium=paid_cpc&utm_campaign=T_mkt&utm_term=%ED%95%9C%EC%85%88&planType=08 -->
+            </li>
         </ul>
     </div>
 
-    <iframe id="myIframe" src="https://store.ohou.se/" frameborder="0"></iframe>
+    <iframe id="myIframe" src="https://ohou.se/store" frameborder="0"></iframe>
     <!-- 스토어 작업 끝 -->
 
 </div>
@@ -137,6 +123,7 @@
     //웹뷰 링크 변경 시작
     function changeIframeSrc(url) {
       var iframe = document.getElementById("myIframe");
+      console.log("이동장소 : ",url)
       iframe.src = url;
     }
 //웹뷰 링크 변경 끝

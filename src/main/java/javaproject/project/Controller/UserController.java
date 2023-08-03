@@ -138,6 +138,33 @@ public class UserController {
     }
 
     //    사업자전환 메서드 끝
+
+    //유저성향
+    @GetMapping("/tendency_1")
+    public String tendency_result1(){
+        return "/UserBoard/tendency_detail";
+    };
+    @GetMapping("/tendency_2")
+    public String tendency_result2(){
+        return "/UserBoard/tendency_detail1";
+    };
+    @GetMapping("/tendency_3")
+    public String tendency_result3(){
+        return "/UserBoard/tendency_detail2";
+    };
+    @GetMapping("/tendency_4")
+    public String tendency_result4(){
+        return "/UserBoard/tendency_detail3";
+    };
+    @GetMapping("/tendency_5")
+    public String tendency_result5(){
+        return "/UserBoard/tendency_detail4";
+    };
+    @GetMapping("/tendency_6")
+    public String tendency_result6(){
+        return "/UserBoard/tendency_detail5";
+    };
+    //유저성향끝
 }
 
 

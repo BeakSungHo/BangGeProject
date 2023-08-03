@@ -91,15 +91,9 @@
                 <p>이벤트</p>
             </div>
         </a>
-        <a th:href="@{/BusinessBoard/map}" class="select">
+        <a th:href="@{/BusinessBoard/map}"  class="select" >
             <div>
-                <p>업체퀵링크
-                </p>
-                <!--                <ul class = "qik">-->
-                <!--                    <li class="qik_in"><a th:href="@{/BusinessBoard/home}"> 업체1 </a></li>-->
-                <!--                    <li class="qik_in"><a th:href="@{/BusinessBoard/home}"> 업체2 </a></li>-->
-                <!--                    <li class="qik_in"><a th:href="@{/BusinessBoard/home}"> 업체3 </a></li>-->
-                <!--                </ul>-->
+                <p>업체퀵링크</p>
             </div>
         </a>
     </nav>
@@ -110,11 +104,11 @@
     </div>
 
 
-    <div th:each="user : ${userList}">
-        <!-- Hidden input field to store the businessman's address -->
-        <input type="hidden" class="businessman-address" th:value="${user.businessman_address}"/>
-        <input type="hidden" class="businessman-id" th:value="${user.id}"/>
-    </div>
+<!--    <div th:each="user : ${userList}">-->
+<!--        &lt;!&ndash; Hidden input field to store the businessman's address &ndash;&gt;-->
+<!--        <input type="hidden" class="businessman-address" th:value="${user.businessman_address}"/>-->
+<!--        <input type="hidden" class="businessman-id" th:value="${user.id}"/>-->
+<!--    </div>-->
     <div class="map_com">
         <div>업체프로필</div>
         <div>오시는 길</div>
@@ -123,10 +117,13 @@
         <img class="map_img" style="width:30%;height:350px;"
              src="https://www.dycad.co.kr/img/images/architectural/architectural1.jpg" alt="Image">
         <div id="map" style="width:50%;height:350px;"></div>
+<<<<<<< HEAD
         <div class="mapList_a" th:each="board : ${boardList}">
             <h2 th:text="${board.title}" th:style="'display:none;'" th:id="'title-' + ${board.author.id}"></h2>
             <div th:utext="${board.content}" th:style="'display:none;'" th:id="'content-' + ${board.author.id}"></div>
         </div>
+=======
+>>>>>>> lms
     </div>
     <div class="address_flex ">
         <div class="address">
@@ -138,9 +135,12 @@
                 </button>
             </p>
         </div>
-
-
     </div>
+    <div class="mapList_a" th:each="board : ${boardList}">
+        <h2 th:text="${board.title}" th:style="'display:none;'" th:id="'title-' + ${board.author.id}"></h2>
+        <div th:utext="${board.content}" th:style="'display:none;padding-top :50px;'" th:id="'content-' + ${board.author.id}"></div>
+    </div>
+
     <div class="p_button" sec:authorize="isAuthenticated()" th:each="board : ${boardList}">
         <a th:href="@{|/BusinessBoard/Board_Modify_Map/${board.id}|}"
            th:if="${board.author != null and #authentication.name == board.author.loginId}">
