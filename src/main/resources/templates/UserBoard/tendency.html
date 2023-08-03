@@ -119,17 +119,7 @@
     <div class="ch_box">
         <div class="ch_flex">
             <div class="image-checkbox">
-<<<<<<< HEAD
-                <input type="checkbox" id="myCheckbox1" onchange="toggleColor_tendency(1)">
-                <label for="myCheckbox1">
-                    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165812354308019119.jpg?gif=1&w=720&webp=1">
-                </label>
-            </div>
-            <div class="image-checkbox">
-                <input type="checkbox" id="myCheckbox2" onchange="toggleColor_tendency(2)">
-                <label for="myCheckbox2">
-                    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165812354308019119.jpg?gif=1&w=720&webp=1"
-=======
+
                 <input type="checkbox" id="myCheckbox1" onchange="toggleColor_tendency(1)" onclick="open1()">
                 <label for="myCheckbox1">
                     <img class="img_size_tendency" src="/image/view?file_name=KakaoTalk_20230704_110025538_15.jpg">
@@ -138,63 +128,37 @@
             <div class="image-checkbox">
                 <input type="checkbox" id="myCheckbox2" onchange="toggleColor_tendency(2)" onclick="open2()">
                 <label for="myCheckbox2">
-                    <img class="img_size_tendency" src="/image/view?file_name=KakaoTalk_20230704_111252912_02.jpg"
->>>>>>> lms
-                         alt="이미지">
+                    <img class="img_size_tendency" src="/image/view?file_name=KakaoTalk_20230704_111252912_02.jpg"alt="이미지">
                 </label>
             </div>
             <div class="image-checkbox">
-<<<<<<< HEAD
-                <input type="checkbox" id="myCheckbox3" onchange="toggleColor_tendency(3)">
-                <label for="myCheckbox3">
-                    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165812354308019119.jpg?gif=1&w=720&webp=1"
-=======
                 <input type="checkbox" id="myCheckbox3" onchange="toggleColor_tendency(3)" onclick="open3()">
                 <label for="myCheckbox3">
                     <img class="img_size_tendency" src="/image/view?file_name=black_it.jpg"
->>>>>>> lms
                          alt="이미지">
                 </label>
             </div>
         </div>
         <div class="ch_flex2">
             <div class="image-checkbox">
-<<<<<<< HEAD
-                <input type="checkbox" id="myCheckbox4" onchange="toggleColor_tendency(4)">
-                <label for="myCheckbox4">
-                    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165812354308019119.jpg?gif=1&w=720&webp=1"
-=======
+
                 <input type="checkbox" id="myCheckbox4" onchange="toggleColor_tendency(4)" onclick="open4()">
                 <label for="myCheckbox4">
                     <img class="img_size_tendency" src="/image/view?file_name=red_it.jpg"
->>>>>>> lms
                          alt="이미지">
                 </label>
             </div>
             <div class="image-checkbox">
-<<<<<<< HEAD
-                <input type="checkbox" id="myCheckbox5" onchange="toggleColor_tendency(5)">
-                <label for="myCheckbox5">
-                    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165812354308019119.jpg?gif=1&w=720&webp=1"
-=======
                 <input type="checkbox" id="myCheckbox5" onchange="toggleColor_tendency(5)" onclick="open5()">
                 <label for="myCheckbox5">
                     <img class="img_size_tendency" src="/image/view?file_name=clean2_it.jpg"
->>>>>>> lms
                          alt="이미지">
                 </label>
             </div>
             <div class="image-checkbox">
-<<<<<<< HEAD
-                <input type="checkbox" id="myCheckbox6" onchange="toggleColor_tendency(6)">
-                <label for="myCheckbox6">
-                    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/projects/165812354308019119.jpg?gif=1&w=720&webp=1"
-=======
                 <input type="checkbox" id="myCheckbox6" onchange="toggleColor_tendency(6)" onclick="open6()">
                 <label for="myCheckbox6">
-                    <img class="img_size_tendency" src="/image/view?file_name=clean_it.jpg"
->>>>>>> lms
-                         alt="이미지">
+                    <img class="img_size_tendency" src="/image/view?file_name=clean_it.jpg" alt="이미지">
                 </label>
             </div>
         </div>
@@ -333,20 +297,11 @@ function open6(){
 
     //성향테스트 버튼
 
-<<<<<<< HEAD
 function toggleColor_tendency(colorNumber) {
   var checkboxes_tendency = document.querySelectorAll('input[type="checkbox"]');
   var selectedCheckbox_tendency = checkboxes_tendency[colorNumber - 1];
   var isChecked_tendency = selectedCheckbox_tendency.checked;
 
-=======
-
-function toggleColor_tendency(colorNumber) {
-  var checkboxes_tendency = document.querySelectorAll('input[type="checkbox"]');
-  var selectedCheckbox_tendency = checkboxes_tendency[colorNumber - 1];
-  var isChecked_tendency = selectedCheckbox_tendency.checked;
-
->>>>>>> lms
   checkboxes_tendency.forEach(function (checkbox, index) {
     if (index !== colorNumber - 1) {
       checkbox.checked = false;

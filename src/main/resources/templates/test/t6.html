@@ -3,201 +3,200 @@
       xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- sbb CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/userBoard_businessBoard/map.css}">
-    <title>방게!</title>
+  <!-- sbb CSS -->
+  <link rel="stylesheet" type="text/css" th:href="@{/userBoard_businessBoard/map.css}">
+  <title>방게!</title>
 </head>
 <body layout:fragment="content">
 <!-- 최상단을 표시하기위한 div -->
 <div id="scrolltop"></div>
 <div class="form">
-    <!--  머리부분 로그인 회원가입 등 시작-->
-    <div class=board_head>
-        <div class=board_tap>
-            <a class="logo" th:href="@{/UserBoard/main}">
-                <div>
-                    <p>방게</p>
-                    <p>방구석인테리어 게시판 </p>
-                </div>
-            </a>
-            <a class="logo_base " th:href="@{/UserBoard/main}">
-                <div>
-                    <p>유저게시판</p>
-                </div>
-            </a>
-            <a class="logo_base select" th:href="@{/BusinessBoard/home}">
-                <div>
-                    <p>사업자 게시판</p>
-                </div>
-            </a>
-            <a class="logo_base" th:href="@{/Store/}">
-                <div>
-                    <p>스토어</p>
-                </div>
-            </a>
+  <!--  머리부분 로그인 회원가입 등 시작-->
+  <div class=board_head>
+    <div class=board_tap>
+      <a class="logo" th:href="@{/UserBoard/main}">
+        <div>
+          <p>방게</p>
+          <p>방구석인테리어 게시판 </p>
         </div>
-        <div class="board_login" sec:authorize="isAnonymous()">
-            <a class="login" th:href="@{/user/login}">
-                <div>
-                    <p>로그인</p>
-                </div>
-            </a>
-            /
-            <a th:href="@{/user/Initiation_General}" class="signup">
-                <div>
-                    <p>회원가입</p>
-                </div>
-            </a>
+      </a>
+      <a class="logo_base " th:href="@{/UserBoard/main}">
+        <div>
+          <p>유저게시판</p>
         </div>
-        <div class="board_login" sec:authorize="isAuthenticated()">
-            <a class="login" th:if="${user.businessman_num == null}" th:href="@{/user/Business_General}">
-                <div>
-                    <p>사업자전환 /</p>
-                </div>
-            </a>
-
-            <a class="login" th:href="@{/user/logout}">
-                <div>
-                    <p>로그아웃</p>
-                </div>
-            </a>
+      </a>
+      <a class="logo_base select" th:href="@{/BusinessBoard/home}">
+        <div>
+          <p>사업자 게시판</p>
         </div>
-    </div>
-    <!--  머리부분 로그인 회원가입 등 끝-->
-    <hr>
-    <!--  상단 nav바 시작-->
-    <nav class="top_nav">
-        <a th:href="@{/BusinessBoard/home}">
-            <div>
-                <p>홈</p>
-            </div>
-        </a>
-        <a th:href="@{/BusinessBoard/part}">
-            <div>
-                <p>부분공사</p>
-            </div>
-        </a>
-        <a th:href="@{/BusinessBoard/integral}">
-            <div>
-                <p>전체공사</p>
-            </div>
-        </a>
-        <a th:href="@{/BusinessBoard/event}">
-            <div>
-                <p>이벤트</p>
-            </div>
-        </a>
-        <a th:href="@{/BusinessBoard/map}"  class="select" >
-            <div>
-                <p>업체퀵링크</p>
-            </div>
-        </a>
-    </nav>
-    <!--  상단 nav바 끝 -->
-    <!-- 상단 탑게시판 시작  -->
-    <div class="sflex">
-        <h3>업체 퀵링크</h3>
-    </div>
-
-
-    <div th:each="user : ${userList}">
-        <!-- Hidden input field to store the businessman's address -->
-        <input type="hidden" class="businessman-address" th:value="${user.businessman_address}"/>
-        <input type="hidden" class="businessman-id" th:value="${user.id}"/>
-    </div>
-    <div class="map_com">
-        <div>업체프로필</div>
-        <div>오시는 길</div>
-    </div>
-    <div class="mapping">
-        <img class="map_img" style="width:30%;height:350px;"
-             src="https://www.dycad.co.kr/img/images/architectural/architectural1.jpg" alt="Image">
-        <div id="map" style="width:50%;height:350px;"></div>
-    </div>
-    <div class="address_flex ">
-        <div class="address">
-            <p th:each="board : ${boardList}">
-                <button class="address_button"
-                        th:attr="data-userid=${board.author.id}, data-address=${board.author.businessman_address}"
-                        th:if="${board.author.businessman_address != null}"
-                        th:text="${board.title}" onclick="setCenter(this)">
-                </button>
-            </p>
+      </a>
+      <a class="logo_base" th:href="@{/Store/}">
+        <div>
+          <p>스토어</p>
         </div>
+      </a>
     </div>
-    <div class="mapList_a" th:each="board : ${boardList}">
-        <h2 th:text="${board.title}" th:style="'display:none;'" th:id="'title-' + ${board.author.id}"></h2>
-        <div th:utext="${board.content}" th:style="'display:none;padding-top :50px;'" th:id="'content-' + ${board.author.id}"></div>
+    <div class="board_login" sec:authorize="isAnonymous()">
+      <a class="login" th:href="@{/user/login}">
+        <div>
+          <p>로그인</p>
+        </div>
+      </a>
+      /
+      <a th:href="@{/user/Initiation_General}" class="signup">
+        <div>
+          <p>회원가입</p>
+        </div>
+      </a>
     </div>
+    <div class="board_login" sec:authorize="isAuthenticated()">
+      <a class="login" th:if="${user.businessman_num == null}" th:href="@{/user/Business_General}">
+        <div>
+          <p>사업자전환 /</p>
+        </div>
+      </a>
 
-    <div class="p_button" sec:authorize="isAuthenticated()" th:each="board : ${boardList}">
-        <a th:href="@{|/BusinessBoard/Board_Modify_Map/${board.id}|}"
-           th:if="${board.author != null and #authentication.name == board.author.loginId}">
-            <button style="width:10%;">수정</button>
-        </a>
+      <a class="login" th:href="@{/user/logout}">
+        <div>
+          <p>로그아웃</p>
+        </div>
+      </a>
     </div>
+  </div>
+  <!--  머리부분 로그인 회원가입 등 끝-->
+  <hr>
+  <!--  상단 nav바 시작-->
+  <nav class="top_nav">
+    <a th:href="@{/BusinessBoard/home}">
+      <div>
+        <p>홈</p>
+      </div>
+    </a>
+    <a th:href="@{/BusinessBoard/part}">
+      <div>
+        <p>부분공사</p>
+      </div>
+    </a>
+    <a th:href="@{/BusinessBoard/integral}">
+      <div>
+        <p>전체공사</p>
+      </div>
+    </a>
+    <a th:href="@{/BusinessBoard/event}">
+      <div>
+        <p>이벤트</p>
+      </div>
+    </a>
+    <a th:href="@{/BusinessBoard/map}"  class="select" >
+      <div>
+        <p>업체퀵링크</p>
+      </div>
+    </a>
+  </nav>
+  <!--  상단 nav바 끝 -->
+  <!-- 상단 탑게시판 시작  -->
+  <div class="sflex">
+    <h3>업체 퀵링크</h3>
+  </div>
 
-    <!--        <div>-->
-    <!--            <a th:href="@{|/BusinessBoard/Board_Modify/${board.id}|}">-->
-    <!--                <button class="button button&#45;&#45;winona button&#45;&#45;border-thin button&#45;&#45;round-s" data-text="수정">-->
-    <!--                    <span>수정</span>-->
-    <!--                </button>-->
-    <!--            </a>-->
-    <!--        </div>-->
-    <!-- 가장아래를 표시하기위한 div  -->
-    <div id="scrollbottom"></div>
+
+  <div th:each="user : ${userList}">
+    <!-- Hidden input field to store the businessman's address -->
+    <input type="hidden" class="businessman-address" th:value="${user.businessman_address}"/>
+    <input type="hidden" class="businessman-id" th:value="${user.id}"/>
+  </div>
+  <div class="map_com">
+    <div>업체프로필</div>
+    <div>오시는 길</div>
+  </div>
+  <div class="mapping">
+    <img class="map_img" style="width:30%;height:350px;"
+         src="https://www.dycad.co.kr/img/images/architectural/architectural1.jpg" alt="Image">
+    <div id="map" style="width:50%;height:350px;"></div>
+  </div>
+  <div class="address_flex ">
+    <div class="address">
+      <p th:each="board : ${boardList}">
+        <button class="address_button"
+                th:attr="data-userid=${board.author.id}, data-address=${board.author.businessman_address}"
+                th:if="${board.author.businessman_address != null}"
+                th:text="${board.title}" onclick="setCenter(this)">
+        </button>
+      </p>
+    </div>
+  </div>
+  <div class="mapList_a" th:each="board : ${boardList}">
+    <h2 th:text="${board.title}" th:style="'display:none;'" th:id="'title-' + ${board.author.id}"></h2>
+    <div th:utext="${board.content}" th:style="'display:none;padding-top :50px;'" th:id="'content-' + ${board.author.id}"></div>
+  </div>
+
+  <div class="p_button" sec:authorize="isAuthenticated()" th:each="board : ${boardList}">
+    <a th:href="@{|/BusinessBoard/Board_Modify_Map/${board.id}|}"
+       th:if="${board.author != null and #authentication.name == board.author.loginId}">
+      <button style="width:10%;">수정</button>
+    </a>
+  </div>
+
+  <!--        <div>-->
+  <!--            <a th:href="@{|/BusinessBoard/Board_Modify/${board.id}|}">-->
+  <!--                <button class="button button&#45;&#45;winona button&#45;&#45;border-thin button&#45;&#45;round-s" data-text="수정">-->
+  <!--                    <span>수정</span>-->
+  <!--                </button>-->
+  <!--            </a>-->
+  <!--        </div>-->
+  <!-- 가장아래를 표시하기위한 div  -->
+  <div id="scrollbottom"></div>
 </div>
 
 <!--우측 네비게이션용 시작-->
 <div class="popup_body">
-    <nav class="popup_nav">
+  <nav class="popup_nav">
 
-        <a href="#scrolltop" rel="nofollow">
-            <button class="nav_button nav_top">
-                TOP
-            </button>
-        </a>
+    <a href="#scrolltop" rel="nofollow">
+      <button class="nav_button nav_top">
+        TOP
+      </button>
+    </a>
 
-        <button class="nav_button" id="global_chat_open" ype="buttont">
-            전체 채팅
-        </button>
+    <button class="nav_button" id="global_chat_open" ype="buttont">
+      전체 채팅
+    </button>
 
-        <button class="nav_button">유저<p>게시판</button>
-        <button class="nav_button">사업자<p>게시판</button>
-        <button class="nav_button">스토어</button>
-        <button class="nav_button">개인 채팅</button>
-        <a href="#scrollbottom" rel="nofollow">
-            <button class="nav_button nav_down">
-                DOWN
-            </button>
-        </a>
+    <button class="nav_button">유저<p>게시판</button>
+    <button class="nav_button">사업자<p>게시판</button>
+    <button class="nav_button">스토어</button>
+    <a href="#scrollbottom" rel="nofollow">
+      <button class="nav_button nav_down">
+        DOWN
+      </button>
+    </a>
 
-    </nav>
+  </nav>
 </div>
 <!--우측 네비게이션용 끝  -->
 
 <!--전체 챗화면 시작 스크립트 사용유의-->
 <div class="draggable_chat">
-    <!--  상단바     -->
-    <div class="chat_top_var">
-        <p>전체채팅창</p>
-        <button id="chat_close" type="button">X</button>
+  <!--  상단바     -->
+  <div class="chat_top_var">
+    <p>전체채팅창</p>
+    <button id="chat_close" type="button">X</button>
+  </div>
+  <!--  하단 챗부분 전송과 채팅창    -->
+  <div class="chat_main">
+    <div class="chat_body">
+      운영자 : 대충 챗팅창
     </div>
-    <!--  하단 챗부분 전송과 채팅창    -->
-    <div class="chat_main">
-        <div class="chat_body">
-            운영자 : 대충 챗팅창
-        </div>
 
-        <div class="input_body">
-            <input type="text">
-            <button>전송</button>
-        </div>
+    <div class="input_body">
+      <input type="text">
+      <button>전송</button>
     </div>
+  </div>
 
 </div>
 </body>
