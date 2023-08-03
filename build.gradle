@@ -47,14 +47,11 @@ dependencies {
 // scss 추가 버그문제로 사용불가
 //	implementation 'org.springframework.boot:spring-boot-starter-web'
 //	implementation 'org.webjars.npm:node-sass:4.14.1'
-
 //	마크다운설치
 	implementation 'org.commonmark:commonmark:0.21.0'
 
-
 	// 메일보내기
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
 
 	//웹 소켓 사용
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -63,7 +60,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/net.coobird/thumbnailator
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
 	implementation 'org.springframework.boot:spring-boot-starter'
-	runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
 
 
 	//test
