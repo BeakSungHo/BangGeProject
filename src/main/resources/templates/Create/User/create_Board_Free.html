@@ -136,9 +136,7 @@
 
 
     <form th:object="${boardCreateForm}" method="post">
-        <div th:replace="~{form_errors :: formErrorsFragment}">
-            <div th:id="editorContent" />
-        </div>
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <input type="hidden" th:name="${parameterName}" th:value="${token}"/>
         <!-- 여기서부터 제목 -->
         <div>
@@ -345,6 +343,7 @@ function uploadSummernoteImageFile(file, editor) {
            }
 		});
 		}
+// 썸머노트 끝
 // 채팅창 움직이기용 시작
 const draggableElementChat = document.querySelector('.draggable_chat');
 let isDraggingChat = false;

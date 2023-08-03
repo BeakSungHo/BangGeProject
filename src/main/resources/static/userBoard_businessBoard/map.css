@@ -403,7 +403,8 @@ display:flex;
 justify-content: space-between;
 padding-top: 30px;
 padding-bottom: 30px;
-position: relative;}
+position: relative;
+}
 
 .mapList_a{
 position: absolute;

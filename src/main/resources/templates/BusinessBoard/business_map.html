@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,7 +11,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/userBoard_businessBoard/map.css}">
     <title>방게!</title>
 </head>
-<body>
+<body layout:fragment="content">
 <!-- 최상단을 표시하기위한 div -->
 <div id="scrolltop"></div>
 <div class="form">
@@ -124,7 +125,7 @@
         <div id="map" style="width:50%;height:350px;"></div>
         <div class="mapList_a" th:each="board : ${boardList}">
             <h2 th:text="${board.title}" th:style="'display:none;'" th:id="'title-' + ${board.author.id}"></h2>
-            <h2 th:text="${board.content}" th:style="'display:none;'" th:id="'content-' + ${board.author.id}"></h2>
+            <div th:utext="${board.content}" th:style="'display:none;'" th:id="'content-' + ${board.author.id}"></div>
         </div>
     </div>
     <div class="address_flex ">
@@ -206,6 +207,112 @@
     </div>
 
 </div>
+</body>
+
+
+<!--카카오 맵 api 시작 -->
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=09c9238827f003ad34c030ac02964caa&libraries=services"></script>
+<script type="text/javascript">
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 초기 중심 좌표
+      level: 3 // 지도의 확대 레벨
+  };
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+     function displayMarker(address, title) {
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        geocoder.addressSearch(address, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">' + title + '</div>'
+                });
+
+                infowindow.open(map, marker);
+                map.setCenter(coords);
+            }
+        });
+    }
+
+
+
+    // 업체 주소를 가지고 있는 요소들을 가져옵니다
+    var hiddenAddresses = document.getElementsByClassName('businessman-address');
+    var hiddenTitles = document.querySelectorAll('[id^="title-"]');
+    // 요소들의 수만큼 반복하면서 업체 위치를 지도에 표시합니다
+     console.log(hiddenAddresses)
+    for (var i = 0; i < hiddenAddresses.length; i++) {
+       var businessmanAddress = hiddenAddresses[i].value;
+       var title = hiddenTitles[i].textContent.trim();
+
+
+        displayMarker(businessmanAddress, title); // i + 1을 전달하여 1번 인덱스부터 시작하도록 수정
+
+    }
+
+
+
+
+function setCenter(button) {
+    var businessmanAddress = button.getAttribute('data-address');
+
+    var userId = button.getAttribute('data-userid');
+    var geocoder = new kakao.maps.services.Geocoder();
+
+        if (!businessmanAddress) {
+        console.error('Invalid address.');
+        return;
+    }
+
+    geocoder.addressSearch(businessmanAddress, function(result, status) {
+
+        if (status === kakao.maps.services.Status.OK) {
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            // 지도 중심을 이동 시킵니다
+                 console.log(businessmanAddress)
+
+            map.setCenter(coords);
+
+            // 해당 유저 아이디의 제목과 내용을 화면에 출력
+            var titles = document.querySelectorAll('[id^="title-"]');
+            var contents = document.querySelectorAll('[id^="content-"]');
+            titles.forEach(function(title) {
+                const titleArr = title.id.split('-');
+                if (titleArr[1]== userId) {
+                    title.style.display = 'block';
+                } else {
+                    title.style.display = 'none';
+                }
+            });
+
+            contents.forEach(function(content) {
+                const contentArr = content.id.split('-');
+                if (contentArr[1]==userId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+        } else {
+            console.error('Failed to geocode the address.');
+        }
+    });
+}
+
+
+
+</script>
+
+<!--카카오 맵 api 끝 -->
 <!--전체 챗화면 끝 스크립트 사용유의-->
 <script layout:fragment="script" type='text/javascript'>
 
@@ -275,110 +382,5 @@ Array.from(delete_elements).forEach(function(element) {
 
 </script>
 
-<!--카카오 맵 api 시작 -->
-<script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=09c9238827f003ad34c030ac02964caa&libraries=services"></script>
-<script>
-    var mapContainer = document.getElementById('map');
-    var mapOption = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 초기 중심 좌표
-      level: 3 // 지도의 확대 레벨
-  };
-    var map = new kakao.maps.Map(mapContainer, mapOption);
 
-
-     function displayMarker(address, title) {
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        geocoder.addressSearch(address, function(result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">' + title + '</div>'
-                });
-
-                infowindow.open(map, marker);
-                map.setCenter(coords);
-            }
-        });
-    }
-
-
-
-    // 업체 주소를 가지고 있는 요소들을 가져옵니다
-    var hiddenAddresses = document.getElementsByClassName('businessman-address');
-    var hiddenTitles = document.querySelectorAll('[id^="title-"]');
-    // 요소들의 수만큼 반복하면서 업체 위치를 지도에 표시합니다
-     console.log(hiddenAddresses)
-
-    for (var i = 0; i < hiddenAddresses.length; i++) {
-       var businessmanAddress = hiddenAddresses[i].value;
-       var title = hiddenTitles[i].textContent.trim();
-
-
-        displayMarker(businessmanAddress, title); // i + 1을 전달하여 1번 인덱스부터 시작하도록 수정
-
-    }
-
-
-
-
-function setCenter(button) {
-    var businessmanAddress = button.getAttribute('data-address');
-
-    var userId = button.getAttribute('data-userid');
-    var geocoder = new kakao.maps.services.Geocoder();
-
-        if (!businessmanAddress) {
-        console.error('Invalid address.');
-        return;
-    }
-
-    geocoder.addressSearch(businessmanAddress, function(result, status) {
-
-        if (status === kakao.maps.services.Status.OK) {
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            // 지도 중심을 이동 시킵니다
-                 console.log(businessmanAddress)
-
-            map.setCenter(coords);
-
-            // 해당 유저 아이디의 제목과 내용을 화면에 출력
-            var titles = document.querySelectorAll('[id^="title-"]');
-            var contents = document.querySelectorAll('[id^="content-"]');
-            titles.forEach(function(title) {
-                const titleArr = title.id.split('-');
-                if (titleArr[1]== userId) {
-                    title.style.display = 'block';
-                } else {
-                    title.style.display = 'none';
-                }
-            });
-
-            contents.forEach(function(content) {
-                const contentArr = content.id.split('-');
-                if (contentArr[1]==userId) {
-                    content.style.display = 'block';
-                } else {
-                    content.style.display = 'none';
-                }
-            });
-        } else {
-            console.error('Failed to geocode the address.');
-        }
-    });
-}
-
-
-
-</script>
-
-<!--카카오 맵 api 끝 -->
-</body>
 </html>
